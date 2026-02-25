@@ -1,5 +1,5 @@
 let HiddenAnimation=true;
-function Number(){
+function checkBoxNumber(){
     let s = document.getElementById("number");
     let ring = document.querySelector('.ring');
     let strokeLength = ring.getTotalLength();
@@ -111,7 +111,9 @@ function quad(timeFraction) {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-  Clone();
+    Clone();
+    console.log(window.orientation);
+    progressBarRotation(window.orientation);
 });
 
 window.addEventListener('resize', () => {
@@ -119,7 +121,30 @@ window.addEventListener('resize', () => {
         Clone();
     }
 });
+
 window.addEventListener("orientationchange", function() {
-    // Выводим числовое значение ориентации
-    console.log(window.orientation);
+    progressBarRotation(window.orientation);
 }, false);
+
+function progressBarRotation(value){
+    let link = document.querySelector(".progress_bar_content").style;
+    let link2 = document.querySelector(".progress_bar").style;
+    let link3 = document.querySelectorAll("p");
+    let i = 0;
+    if (value == 0){
+        link.flexDirection = "column";
+        link2.width = 450;
+        link2.height = 900;
+        for (i=0;i<link3.length;i++){
+            link3[i].style.fontSize = 30;
+        }
+    }
+    else {
+        link.flexDirection = "row";
+        link2.width = 600;
+        link2.height = 300;
+        for (i=0;i<link3.length;i++){
+            link3[i].style.fontSize = 20;
+        }
+    }
+}
