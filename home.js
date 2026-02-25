@@ -123,8 +123,3 @@ window.addEventListener("orientationchange", function() {
     // Выводим числовое значение ориентации
     console.log(window.orientation);
 }, false);
-
-function handleOrientation(event){
-    console.log("povorot");
-    console.log(event); 
-}
