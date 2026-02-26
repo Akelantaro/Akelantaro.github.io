@@ -136,9 +136,6 @@ function progressBarRotation(value){
     let link = document.querySelector(".progress_bar_content").style;
     let link2 = document.querySelector(".progress_bar").style;
     let ring = document.querySelector('.ring');
-    let rotation = ring.style.transform;
-    ring.style.transform = `rotate(${1}deg)`;
-    ring.style.transform = rotation;
     if (value == 0){
         link.flexDirection = "column";
         link2.maxWidth = 300;
@@ -152,4 +149,9 @@ function progressBarRotation(value){
         link2.marginTop = 20;
     }
     Clone();
+    let rotation = ring.style.transform;
+    ring.style.transform = `rotate(${1}deg)`;
+    console.log(ring.style.transform);
+    ring.style.transform = rotation;
+    console.log(ring.style.transform);
 }
