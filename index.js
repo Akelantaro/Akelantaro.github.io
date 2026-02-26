@@ -135,6 +135,10 @@ window.addEventListener("orientationchange", function() {
 function progressBarRotation(value){
     let link = document.querySelector(".progress_bar_content").style;
     let link2 = document.querySelector(".progress_bar").style;
+    let ring = document.querySelector('.ring');
+    let rotation = ring.style.transform;
+    ring.style.transform = `rotate(${1}deg)`;
+    ring.style.transform = rotation;
     if (value == 0){
         link.flexDirection = "column";
         link2.maxWidth = 300;
