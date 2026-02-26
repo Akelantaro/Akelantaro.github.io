@@ -5,26 +5,26 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <div class="progress_bar">
+        <div class="progressBar">
             <p>Progress</p>
-            <div class="progress_bar_content">
+            <div class="content">
                 <svg>
-                    <circle class="ring" r="60" cx="100" cy="100" />
+                    <circle r="60" cx="100" cy="100" />
                 </svg>
-                <div class="progress_bar_content_switches">
-                    <div class="progress_bar_content_switches_normal">
-                        <input type="number" onchange="checkBoxNumber()" id="number" class="ops"><p>Value</p>
+                <div class="switches">
+                    <div class="normal">
+                        <input type="number" onchange="checkBoxNumber()"><p>Value</p>
                     </div>
-                    <div class="progress_bar_content_switches_animated">
+                    <div class="animated">
                         <label>
-                            <input type="checkbox" onchange="Animated()" id="Animated">
+                            <input type="checkbox" onchange="checkBoxAnimated()">
                             <span></span>
                         </label>
                         <p>Animated</p>
                     </div>
-                    <div class="progress_bar_content_switches_hidden">
+                    <div class="hidden">
                         <label>
-                            <input type="checkbox" onchange="Hidden()" class="Hidden">
+                            <input type="checkbox" onchange="checkBoxHidden()">
                             <span></span>
                         </label>
                         <p>Hidden</p>
@@ -32,9 +32,9 @@
                 </div>
             </div>
         </div>
-        <div class="progress_bar_content_switches_hidden clone">
+        <div class="clone">
             <label>
-                <input type="checkbox" onchange="HiddenClone()" class="Hidden" disabled>
+                <input type="checkbox" onchange="hiddenCloneReturn()" disabled>
                 <span></span>
             </label>
             <p>Hidden</p>

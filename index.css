@@ -1,8 +1,4 @@
-body{
-    font-size: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.progress_bar{
+.progressBar{
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -19,11 +15,15 @@ body{
     box-shadow: 5px 5px 20px 10px rgb(0, 92, 254, .2);
     border-radius: 20px;
 }
-p{
+
+.progressBar p, .clone p{
     margin: 5px;
     margin-left: 25px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.progress_bar_content{
+
+.progressBar .content{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -31,49 +31,48 @@ p{
     width: 100%;
     height: 90%;
 }
-.progress_bar_content_switches{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: space-around;
-    height: 150px;
-    width: auto;
-}
-.progress_bar_content_switches div{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-}
-svg{
+
+.ProgressBar svg{
     width: 200px;
     height: 200px;
 }
-.ring{
+
+.ProgressBar circle{
   fill: none;
   stroke: rgb(0, 92, 254);
   stroke-width: 15px;
   transform-origin: center;
   transform: rotate(270deg);
 }
-.clone{
+.progressBar .switches{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-around;
+    height: auto;
+    width: auto;
+}
+.progressBar .switches div,.clone{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: start;
+    margin-bottom: 10px;
+}
+.clone{
     position: absolute;
     transition: all 0.3s ease;
     z-index: -1;
     opacity: 0;
 }
-label{
+.progressBar label, .clone label{
     display: inline-block;
     height: 28px;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
 }
-label span{
+.progressBar span, .clone span{
     display: inline-block;
     box-sizing: border-box;
     width: 56px;
@@ -84,7 +83,7 @@ label span{
     transition: 1s;
     position: relative;
 }
-label span:before {
+.progressBar span::before, .clone span:before {
     content: '';
     position: absolute;
     top: 1px;
@@ -97,7 +96,7 @@ label span:before {
     box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
 	transition: 1s;
 }
-label input[type=checkbox]{
+.progressBar input[type=checkbox], .clone input[type=checkbox]{
     display: block;	
 	width: 0;
 	height: 0;	
@@ -105,13 +104,19 @@ label input[type=checkbox]{
 	z-index: -1;
 	opacity: 0;
 }
-label input[type=checkbox]:checked + span {
+.ProgressBar input[type=checkbox]:checked + span {
     background: rgb(0, 92, 254);
 }
-label input[type=checkbox]:checked + span::before{
+.ProgressBar input[type=checkbox]:checked + span::before{
     transform:translateX(28px);
 }
-input[type=number]{
+.clone input[type=checkbox]:checked + span {
+    background: rgb(0, 92, 254);
+}
+.clone input[type=checkbox]:checked + span::before{
+    transform:translateX(28px);
+}
+.progressBar input[type=number]{
     display: inline-block;
     box-sizing: border-box;
     width: 56px;
@@ -128,8 +133,4 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
 }

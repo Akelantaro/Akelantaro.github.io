@@ -1,154 +1,169 @@
-let HiddenAnimation=true;
+let HiddenAnimation = true;
+let contentInputs,ring,animatedInput,cloneInput,cloneBox,progressBar,hiddenInput;
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    contentInputs = document.querySelectorAll(".progressBar input");
+    ring = document.querySelector('.progressBar circle');
+    animatedInput = document.querySelector(".progressBar .animated input");
+    cloneInput = document.querySelector(".clone input");
+    cloneBox = document.querySelector(".clone");
+    progressBar = document.querySelector(".progressBar");
+    hiddenInput = document.querySelector(".progressBar .hidden");
+
+    progressBarRotation(window.orientation);
+});
+
 function checkBoxNumber(){
-    let s = document.getElementById("number");
-    if (s.value<0){s.value = 0};
-    let ring = document.querySelector('.ring');
+    let normalInput = document.querySelector(".progressBar .normal input");
     let strokeLength = ring.getTotalLength();
-    let result = strokeLength/100*s.value;
-    if (s.value>=100){s.value = 100;result++};
+    let result = strokeLength/100*normalInput.value;
+
+    if (normalInput.value<0){normalInput.value = 0};
+    if (normalInput.value>=100){normalInput.value = 100;result++};
+
     ring.style.strokeDasharray = result + ',' + strokeLength;
 }
 
-function Povorot(){
-    let check = document.getElementById("Animated");
+function ringRotation(){
     let start = Date.now();
-        let ring = document.querySelector('.ring');
-        let trans = ring.style.transform;
-        let b = -90;
-        let deg = "";
-        if (trans.length != 0){
-            let i=7;
-            while (trans[i]!="d" && i <100){
-                deg+=trans[i];
-                i++;
-            }
-            b = parseInt(deg);
+    let trans = ring.style.transform;
+    let b = -90;
+    let deg = "";
+
+    if (trans.length != 0){
+        let i=7;
+
+        while (trans[i]!="d" && i <100){
+            deg+=trans[i];
+            i++;
         }
-        let timer = setInterval(function(){
-            let a = -(((start - Date.now())/7-b)%360);
-            ring.style.transform = `rotate(${a}deg)`;
-            if  (!check.checked){
-                clearInterval(timer);
-                return;
-            }
-        },10)
-}
-function Animated(){
-    let check = document.getElementById("Animated");
-    if (check.checked){
-        let start = Date.now();
-        let ring = document.querySelector('.ring');
-        let trans = ring.style.transform;
-        let b = -90;
-        let deg = "";
-        if (trans.length != 0){
-            let i=7;
-            while (trans[i]!="d" && i <100){
-                deg+=trans[i];
-                i++;
-            }
-            b = parseInt(deg);
-        }
-        let timer = setInterval(function(){
-            let a = -(((start - Date.now())/7-b)%360);
-            ring.style.transform = `rotate(${a}deg)`;
-            if  (!check.checked){
-                clearInterval(timer);
-                return;
-            }
-        },10)
+
+        b = parseInt(deg);
     }
-}
-function Hidden(){
-    document.querySelector(".progress_bar_content_switches_hidden input").disabled = true;
-    HiddenAnimation = false;
-    document.querySelector(".clone input").checked = true;
-    document.querySelector(".clone").style.opacity = 1;
-    let start = document.querySelector(".clone").getBoundingClientRect();
-    let end = document.querySelector(".progress_bar").getBoundingClientRect();
-    let x = start.left-end.left;
-    let y = start.top-end.top;
-    let i = 1;
+
     let timer = setInterval(function(){
-        i-=0.01;
-        document.querySelector(".progress_bar").style.opacity = quad(i);
-        if (i<=0){
+        let a = -(((start - Date.now())/7-b)%360);
+        ring.style.transform = `rotate(${a}deg)`;
+
+        if  (!animatedInput.checked){
             clearInterval(timer);
-             i = 0;
-            let timer2 = setInterval(function(){
-                i+=0.01;
-                document.querySelector(".clone").style.top = start.top - quad(i)*y;
-                document.querySelector(".clone").style.left = start.left - quad(i)*x;
-                if (i>=1){
-                clearInterval(timer2);
-                Clone();
-                document.querySelector(".clone").style.zIndex = 1;
-                document.querySelector(".clone input").disabled = false;
-                HiddenAnimation = true;
-                return;
+            return;
         }
     },10)
+}
+
+function checkBoxAnimated(){
+    if (animatedInput.checked){
+       ringRotation();
+    }
+}
+
+function checkBoxHidden(){
+    for (let i=0;i<=2;i++){
+        contentInputs[i].disabled = true;
+    }
+
+    HiddenAnimation = false;
+    cloneInput.checked = true;
+    cloneBox.style.opacity = 1;
+
+    let start = cloneBox.getBoundingClientRect();
+    let end = progressBar.getBoundingClientRect();
+    let x = start.left-end.left;
+    let y = start.top-end.top;
+    i = 1;
+
+    let timer = setInterval(function(){
+        i-=0.01;
+        progressBar.style.opacity = quad(i);
+
+        if (i<=0){
+            clearInterval(timer);
+            i = 0;
+
+            let timer2 = setInterval(function(){
+                i+=0.01;
+                cloneBox.style.top = start.top - quad(i)*y;
+                cloneBox.style.left = start.left - quad(i)*x;
+
+                if (i>=1){
+                    clearInterval(timer2);
+                    cloneAmendment();
+                    cloneBox.style.zIndex = 1;
+                    cloneInput.disabled = false;
+                    HiddenAnimation = true;
+
+                    return;
+                }
+            },10)
+
             return;
         }
     },10);
 }
 
-function Clone(){
-    let bar = document.querySelector(".progress_bar_content_switches_hidden").getBoundingClientRect();
-    let clone = document.querySelector(".clone");
-    clone.style.width = bar.width;
-    clone.style.height = bar.height;
-    if (document.querySelector(".clone input").checked){
-        bar = document.querySelector(".progress_bar").getBoundingClientRect();
+function cloneAmendment(){
+    let hiddenInputFeatures = hiddenInput.getBoundingClientRect();
+    cloneBox.style.width = hiddenInputFeatures.width;
+    cloneBox.style.height = hiddenInputFeatures.height;
+
+    if (cloneInput.checked){
+        hiddenInputFeatures = progressBar.getBoundingClientRect();
     }
-    clone.style.top = bar.top;
-    clone.style.left = bar.left;
+
+    cloneBox.style.top = hiddenInputFeatures.top;
+    cloneBox.style.left = hiddenInputFeatures.left;
 }
 
-function HiddenClone(){
-    document.querySelector(".clone input").disabled = true;
+function hiddenCloneReturn(){
+    cloneInput.disabled = true;
     HiddenAnimation = false;
-    document.querySelector(".progress_bar_content_switches_hidden input").checked = false;
-    let end = document.querySelector(".progress_bar_content_switches_hidden").getBoundingClientRect();
-    let start = document.querySelector(".progress_bar").getBoundingClientRect();
+    document.querySelector(".progressBar .hidden input").checked = false;
+
+    let end = hiddenInput.getBoundingClientRect();
+    let start = progressBar.getBoundingClientRect();
     let x = start.left-end.left;
     let y = start.top-end.top;
     let i = 0;
+
     let timer = setInterval(function(){
-        document.querySelector(".clone").style.top = start.top - quad(i)*y;
-        document.querySelector(".clone").style.left = start.left - quad(i)*x;
-        i+=0.1;
+        cloneBox.style.top = start.top - quad(i)*y;
+        cloneBox.style.left = start.left - quad(i)*x;
+        i+=0.01;
+
         if (i>=1){
             clearInterval(timer);
-            Clone();
+            cloneAmendment();
             i = 0;
+
             let timer2 = setInterval(function(){
                 i+=0.01;
-                document.querySelector(".progress_bar").style.opacity = quad(i);
+                progressBar.style.opacity = quad(i);
+
                 if (i>=1){
-                clearInterval(timer2);
-                document.querySelector(".clone").style.zIndex = -1;
-                document.querySelector(".clone").style.opacity = 0;
-                document.querySelector(".progress_bar_content_switches_hidden input").disabled = false;
-                HiddenAnimation = true;
+                    clearInterval(timer2);
+                    cloneBox.style.zIndex = -1;
+                    cloneBox.style.opacity = 0;
+                    for (i=0;i<=2;i++){
+                        contentInputs[i].disabled = false;
+                    }
+                    HiddenAnimation = true;
+                    
                 return;
-        }
-    },10)
+                }
+            },10)
             return;
         }
-    },100)
+    },10)
 }
+
 function quad(timeFraction) {
   return Math.pow(timeFraction, 2)
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
-    progressBarRotation(window.orientation);
-});
-
 window.addEventListener('resize', () => {
     if (HiddenAnimation){
-        Clone();
+        cloneAmendment();
     }
 });
 
@@ -157,9 +172,8 @@ window.addEventListener("orientationchange", function() {
 }, false);
 
 function progressBarRotation(value){
-    let link = document.querySelector(".progress_bar_content").style;
-    let link2 = document.querySelector(".progress_bar").style;
-    let ring = document.querySelector('.ring');
+    let link = document.querySelector(".progressBar .content").style;
+    let link2 = progressBar.style;
     if (value == 0){
         link.flexDirection = "column";
         link2.maxWidth = 300;
@@ -172,6 +186,6 @@ function progressBarRotation(value){
         link2.maxHeight = 300;
         link2.marginTop = 20;
     }
-    Clone();
-    Povorot();
+    cloneAmendment();
+    ringRotation();
 }
