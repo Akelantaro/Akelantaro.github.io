@@ -52,7 +52,6 @@ svg{
 .ring{
   fill: none;
   stroke: rgb(0, 92, 254);
-  stroke: aqua;
   stroke-width: 15px;
   transform-origin: center;
   transform: rotate(270deg);
@@ -96,7 +95,7 @@ label span:before {
     border-radius: 50%;
     background: #eee;
     box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
-	transition: .5s;
+	transition: 5.5s;
 }
 label input[type=checkbox]{
     display: block;	
